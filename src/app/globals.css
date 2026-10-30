@@ -1,26 +1,217 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ===========================================================================
+   COMMUNOVA · "The Civic Almanac"
+   Warm paper surfaces, deep canopy green, a single clay accent.
+   Light is the default; `.dark` is applied to <html> by next-themes.
+   =========================================================================== */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  /* Brand ramp — theme-aware surfaces and marks */
+  --paper: #faf6ed;
+  --sand: #f1e9da;
+  --bark: #ded2bd;
+  --ink: #14201a;
+  --ink-muted: #5a655d;
+  --canopy: #1b3a2c;
+  --fern: #2c5a43;
+  --clay: #a54b25;
+  --ember: #b3542b;
+  --marigold: #d99a4e;
+
+  /* shadcn/ui contract */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #fffdf8;
+  --card-foreground: var(--ink);
+  --popover: #fffdf8;
+  --popover-foreground: var(--ink);
+  --primary: var(--canopy);
+  --primary-foreground: var(--paper);
+  --primary-hover: var(--fern);
+  --secondary: var(--sand);
+  --secondary-foreground: var(--ink);
+  --muted: var(--sand);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--sand);
+  --accent-foreground: var(--ink);
+  --destructive: var(--clay);
+  --destructive-foreground: var(--paper);
+  --border: var(--bark);
+  --input: var(--bark);
+  --ring: var(--clay);
+
+  --radius: 4px;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --paper: #0f1613;
+  --sand: #16211c;
+  --bark: #2a362f;
+  --ink: #ece6d8;
+  --ink-muted: #9ba79e;
+  --canopy: #204636;
+  --fern: #2f6a4e;
+  --clay: #e08a5f;
+  --ember: #d2734a;
+  --marigold: #d9a25e;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #17231e;
+  --card-foreground: var(--ink);
+  --popover: #1c2823;
+  --popover-foreground: var(--ink);
+  --primary: #e9e2d1;
+  --primary-foreground: #101915;
+  --primary-hover: #f7f2e7;
+  --secondary: #1c2823;
+  --secondary-foreground: var(--ink);
+  --muted: #1c2823;
+  --muted-foreground: var(--ink-muted);
+  --accent: #22312a;
+  --accent-foreground: var(--ink);
+  --destructive: var(--clay);
+  --destructive-foreground: #101915;
+  --border: var(--bark);
+  --input: var(--bark);
+  --ring: var(--clay);
 }
 
 @theme inline {
+  /* shadcn/ui contract */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand aliases */
+  --color-paper: var(--paper);
+  --color-sand: var(--sand);
+  --color-bark: var(--bark);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-canopy: var(--canopy);
+  --color-fern: var(--fern);
+  --color-clay: var(--clay);
+  --color-ember: var(--ember);
+  --color-marigold: var(--marigold);
+
+  /* Typefaces */
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* Editorial type scale */
+  --text-display: clamp(3rem, 6.2vw, 5.75rem);
+  --text-display--line-height: 0.94;
+  --text-display--letter-spacing: -0.025em;
+
+  --text-h1: clamp(2.5rem, 4.4vw, 4rem);
+  --text-h1--line-height: 1;
+  --text-h1--letter-spacing: -0.02em;
+
+  --text-h2: clamp(1.875rem, 3vw, 2.75rem);
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.015em;
+
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.01em;
+
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+
+  --text-eyebrow: 0.6875rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.18em;
+
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.2;
+  --text-meta--letter-spacing: 0.06em;
+
+  /* Geometry — nothing above 8px except avatars */
+  --radius-xs: 2px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-2xl: 8px;
+
+  /* The one shadow in the system, reserved for overlays */
+  --shadow-overlay: 0 1px 2px rgb(20 32 26 / 0.06), 0 12px 32px -16px rgb(20 32 26 / 0.18);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--marigold);
+    color: var(--canopy);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility rule {
+  border-top: 1px solid var(--border);
 }
