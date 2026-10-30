@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Communova
 
-## Getting Started
+A civic almanac for Dhaka: a community events platform where residents create
+service events, join their neighbours, and keep a public record of the work.
 
-First, run the development server:
+Live site: **https://communova.vercel.app** _(placeholder — replace after deploy)_
+
+## Features
+
+- **Create a service event** — title, description, type, thumbnail, location, and
+  a future-only date, published under the member who created it.
+- **Join in one click** — event details stay public; joining requires an account
+  and adds the event to the member's joined list.
+- **A public register** — upcoming events in a responsive grid, sorted by date,
+  with past dates removed automatically.
+- **Manage your own events** — members can update or delete only the events they
+  created; ownership is enforced on the API with a JWT.
+- **Joined events** — a private, date-sorted list of everything the member has
+  signed up for, including past dates.
+- **Profile and photo** — Better Auth identity with a display name and photo URL
+  that appear on every published event.
+- **Light and dark themes** — a full token-level theme switch, remembered across
+  reloads.
+- **Editorial, responsive design** — a warm paper and canopy-green system, built
+  to work at 390px and 1440px.
+
+## Stack
+
+| Layer | Choice |
+| --- | --- |
+| Client | Next.js (App Router), TypeScript, Tailwind v4, shadcn/ui primitives |
+| Auth | Better Auth, MongoDB adapter, JWT + JWKS |
+| Server | Express 5, TypeScript, MongoDB |
+| Fonts | Instrument Serif, Instrument Sans, IBM Plex Mono |
+
+## Local development
 
 ```bash
+# client
+cd client
+cp .env.example .env.local
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# server
+cd server
+cp .env.example .env
+npm install
+npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The client runs on `http://localhost:3000`; the API on `http://localhost:4000`.
+Point `MONGODB_URI` at an Atlas cluster (or a local mongod) in both `.env` files
+and add Google OAuth keys to enable social sign-in.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Without MongoDB
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Set `AUTH_DEV_MEMORY=1` in `client/.env.local` to run the auth flow against
+Better Auth's in-memory adapter. Accounts reset when the dev server restarts;
+every other feature still targets MongoDB.
 
-## Learn More
+## Repository layout
 
-To learn more about Next.js, take a look at the following resources:
+```
+client/   Next.js app, Better Auth, design system
+server/   Express API, JWT verification, events
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See `client/src/app/styleguide` (development only) for the design system
+reference.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts
 
-## Deploy on Vercel
+| Client | Purpose |
+| --- | --- |
+| `npm run dev` | Next dev server |
+| `npm run build` | Production build |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript, no emit |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Server | Purpose |
+| --- | --- |
+| `npm run dev` | Watch mode via `tsx` |
+| `npm run build` | Compile to `dist/` |
+| `npm start` | Run the compiled API |
+| `npm run typecheck` | TypeScript, no emit |
