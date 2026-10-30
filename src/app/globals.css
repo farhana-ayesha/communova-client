@@ -69,9 +69,9 @@
   --card-foreground: var(--ink);
   --popover: #1c2823;
   --popover-foreground: var(--ink);
-  --primary: #e9e2d1;
-  --primary-foreground: #101915;
-  --primary-hover: #f7f2e7;
+  --primary: #2f6a4e;
+  --primary-foreground: #f7f2e7;
+  --primary-hover: #3a7d5d;
   --secondary: #1c2823;
   --secondary-foreground: var(--ink);
   --muted: #1c2823;
