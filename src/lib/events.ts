@@ -70,3 +70,17 @@ export async function getEventView(
 ): Promise<FeedResult<EventView>> {
   return request<EventView>(`/api/events/${encodeURIComponent(id)}`, token);
 }
+
+/** Private: events the signed-in member created. */
+export async function getEventsByCreator(
+  token: string,
+): Promise<FeedResult<EventDto[]>> {
+  return request<EventDto[]>("/api/events/mine", token);
+}
+
+/** Private: events the signed-in member joined, past ones included. */
+export async function getJoinedEvents(
+  token: string,
+): Promise<FeedResult<EventDto[]>> {
+  return request<EventDto[]>("/api/events/joined", token);
+}
