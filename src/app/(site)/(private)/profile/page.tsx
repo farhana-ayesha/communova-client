@@ -40,10 +40,9 @@ export default async function ProfilePage() {
   return (
     <div>
       <div className="border-t border-bark pt-6">
-        <div className="flex items-baseline gap-3">
-          <span className="font-mono text-meta text-clay">M</span>
-          <span className="font-mono text-eyebrow uppercase text-ink-muted">Your record</span>
-        </div>
+        <span className="font-mono text-eyebrow uppercase text-clay">
+          Your record
+        </span>
         <h2 className="mt-4 font-serif text-h1 text-ink">Profile</h2>
         <p className="mt-3 max-w-[52ch] text-body text-ink-muted">
           The identity attached to every event you create and every event you join.

@@ -43,7 +43,7 @@ async function SiteFooter() {
             </p>
 
             <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.16em] text-on-brand/50">
-              Record no. 0001 · established 2026
+              A public record · Dhaka, Bangladesh
             </p>
           </div>
 

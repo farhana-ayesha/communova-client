@@ -25,12 +25,9 @@ export default async function EventsPage() {
   return (
     <Container className="py-10 md:py-14">
       <div className="border-t border-bark pt-6">
-        <div className="flex items-baseline gap-3">
-          <span className="font-mono text-meta text-clay">01</span>
-          <span className="font-mono text-eyebrow uppercase text-ink-muted">
-            The register
-          </span>
-        </div>
+        <span className="font-mono text-eyebrow uppercase text-clay">
+          The register
+        </span>
 
         <div className="mt-4 flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
           <h1 className="max-w-[20ch] text-balance font-serif text-h1 text-ink">
@@ -63,8 +60,7 @@ export default async function EventsPage() {
               Register · upcoming
             </span>
             <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-muted">
-              {String(count).padStart(2, "0")}{" "}
-              {count === 1 ? "entry" : "entries"}
+              {count} {count === 1 ? "entry" : "entries"}
             </span>
           </div>
 

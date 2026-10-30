@@ -1,4 +1,11 @@
-import { ArrowRight, ArrowUpRight, CalendarPlus, MapPin } from "lucide-react";
+import {
+  Archive,
+  ArrowRight,
+  ArrowUpRight,
+  MapPin,
+  PenLine,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { EventCard } from "@/components/events/event-card";
 import { NewsletterForm } from "@/components/home/newsletter-form";
@@ -9,57 +16,71 @@ import { Tag } from "@/components/ui/tag";
 import { eventDateParts } from "@/lib/dates";
 import { getUpcomingEvents } from "@/lib/events";
 import { getSession } from "@/lib/session";
+import { cn } from "@/lib/utils";
 import { EVENT_TYPE_LABELS, EVENT_TYPES } from "@/types/event";
 
 const features = [
   {
-    index: "01",
+    key: "post",
+    icon: PenLine,
     title: "Post a service event",
-    body: "A cleanup, a plantation drive, a blanket collection. Title, description, type, photo, place, and a date that must still be ahead of you.",
+    body: "A cleanup, a plantation drive, a blanket collection. Say what will be done, where to meet, and what a neighbour should bring.",
     footnote: "Published under your name",
+    cta: "Create an event",
+    href: "create",
   },
   {
-    index: "02",
+    key: "join",
+    icon: Users,
     title: "Join your neighbours",
     body: "See what is happening nearby, add your name in one click, and keep every event you have joined in a single list.",
     footnote: "One account, one record",
+    cta: "Browse the register",
+    href: "/events",
   },
   {
-    index: "03",
+    key: "record",
+    icon: Archive,
     title: "Keep the record",
     body: "Events stay on the register after the date passes, so the work a city does for itself is not forgotten by the next season.",
     footnote: "Past dates remain",
+    cta: "Your joined events",
+    href: "joined",
   },
 ] as const;
 
 const fieldNotes = [
   {
-    index: "01",
-    src: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80",
-    alt: "Two hands holding a young sapling above dark soil",
-    caption: "Saplings counted before the morning",
-    place: "Dhanmondi Lake",
-  },
-  {
-    index: "02",
-    src: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1000&q=80",
+    src: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1400&q=80",
     alt: "Winter coats and shirts hanging in a row",
     caption: "Winter coats, sorted by size",
     place: "Lalmatia",
+    span: "lg:col-span-7",
+    ratio: "aspect-[16/10]",
   },
   {
-    index: "03",
-    src: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1000&q=80",
+    src: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80",
+    alt: "Two hands holding a young sapling above dark soil",
+    caption: "Saplings counted before the morning",
+    place: "Dhanmondi Lake",
+    span: "lg:col-span-5",
+    ratio: "aspect-[4/3]",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1200&q=80",
     alt: "Four coloured recycling bins lined up against a wall",
     caption: "Bins set out for the collection round",
     place: "Mirpur 10",
+    span: "lg:col-span-5",
+    ratio: "aspect-[4/3]",
   },
   {
-    index: "04",
-    src: "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?auto=format&fit=crop&w=1000&q=80",
+    src: "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?auto=format&fit=crop&w=1400&q=80",
     alt: "A raised garden bed filled with young green plants",
     caption: "A bed ready for the next planting",
     place: "Rayerbazar",
+    span: "lg:col-span-7",
+    ratio: "aspect-[16/10]",
   },
 ] as const;
 
@@ -126,14 +147,11 @@ export default async function HomePage() {
                     alt={heroPhoto.alt}
                     className="size-full object-cover"
                   />
-                  <span className="absolute left-3 top-3 border border-bark bg-paper px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-ink">
-                    Field note 01
-                  </span>
                 </div>
                 <figcaption className="flex items-start justify-between gap-5 px-4 py-3.5">
                   <p className="max-w-[36ch] text-[12px] leading-5 text-ink-muted">
-                    Hands, soil, and a sapling ready for the November plantation
-                    at Dhanmondi Lake.
+                    Hands, soil, and a sapling ready for the next plantation
+                    morning at Dhanmondi Lake.
                   </p>
                   <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-muted">
                     Dhaka · 2026
@@ -180,12 +198,9 @@ export default async function HomePage() {
               The register covers
             </p>
             <dl className="mt-4 grid grid-cols-2 gap-px border border-bark bg-bark sm:grid-cols-3 lg:grid-cols-6">
-              {EVENT_TYPES.map((type, index) => (
+              {EVENT_TYPES.map((type) => (
                 <div key={type} className="bg-background px-4 py-4">
-                  <dt className="flex items-center justify-between gap-3">
-                    <span className="font-mono text-[10px] tracking-[0.12em] text-clay">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
+                  <dt>
                     <Tag tone={type} className="border-0 px-0 py-0">
                       {EVENT_TYPE_LABELS[type]}
                     </Tag>
@@ -213,60 +228,79 @@ export default async function HomePage() {
       {/* ============================= FEATURES ============================= */}
       <section id="features" className="scroll-mt-24">
         <Container className="py-14 md:py-20">
-          <SectionHeader
-            index="02"
-            label="What you can do"
-            title="Small, specific, and close to home."
-            description="Three things make the register useful: a member posts the work, a neighbour joins it, and the record stays put."
-          />
-
-          <div className="mt-10 grid gap-px border border-bark bg-bark md:grid-cols-3">
-            {features.map((feature) => (
-              <article
-                key={feature.index}
-                className="flex flex-col bg-background p-6 md:p-7"
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-4">
+              <p className="font-mono text-eyebrow uppercase text-clay">
+                What you can do
+              </p>
+              <h2 className="mt-5 max-w-[14ch] text-balance font-serif text-h2 text-ink">
+                Small, specific, and close to home.
+              </h2>
+              <p className="mt-5 max-w-[40ch] text-body leading-relaxed text-ink-muted">
+                Three things make the register useful: a member posts the work, a
+                neighbour joins it, and the record stays put.
+              </p>
+              <Link
+                href="/events"
+                className="mt-6 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink transition-colors hover:text-clay"
               >
-                <div className="flex items-baseline justify-between gap-4">
-                  <span className="font-mono text-[10px] tracking-[0.14em] text-clay">
-                    {feature.index}
-                  </span>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-muted">
-                    {feature.footnote}
-                  </span>
-                </div>
-                <h3 className="mt-5 font-serif text-h3 text-ink">{feature.title}</h3>
-                <p className="mt-3 text-small leading-relaxed text-ink-muted">
-                  {feature.body}
-                </p>
-                <span className="mt-auto block border-t border-bark pt-4">
-                  {feature.index === "01" ? (
-                    <Link
-                      href={session ? "/create-event" : "/register"}
-                      className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-ink transition-colors hover:text-clay"
-                    >
-                      <CalendarPlus className="size-3.5" aria-hidden />
-                      {session ? "Create an event" : "Open a record"}
-                    </Link>
-                  ) : feature.index === "02" ? (
-                    <Link
-                      href="/events"
-                      className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-ink transition-colors hover:text-clay"
-                    >
-                      Browse the register
-                      <ArrowRight className="size-3.5" aria-hidden />
-                    </Link>
-                  ) : (
-                    <Link
-                      href={session ? "/joined-events" : "/register"}
-                      className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-ink transition-colors hover:text-clay"
-                    >
-                      {session ? "Your joined events" : "Start your record"}
-                      <ArrowRight className="size-3.5" aria-hidden />
-                    </Link>
-                  )}
-                </span>
-              </article>
-            ))}
+                Browse the register
+                <ArrowRight className="size-3.5" aria-hidden />
+              </Link>
+            </div>
+
+            <div className="lg:col-span-7 lg:col-start-6">
+              <ul className="border-t border-bark">
+                {features.map((feature) => (
+                  <li
+                    key={feature.key}
+                    className="border-b border-bark py-6 sm:grid sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-6"
+                  >
+                    <span className="grid size-10 place-items-center border border-bark text-clay">
+                      <feature.icon className="size-4" aria-hidden />
+                    </span>
+                    <div className="mt-4 sm:mt-0">
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                        <h3 className="font-serif text-h3 text-ink">
+                          {feature.title}
+                        </h3>
+                        <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-muted">
+                          {feature.footnote}
+                        </span>
+                      </div>
+                      <p className="mt-2 max-w-[50ch] text-small leading-relaxed text-ink-muted">
+                        {feature.body}
+                      </p>
+                      <Link
+                        href={
+                          feature.href === "create"
+                            ? session
+                              ? "/create-event"
+                              : "/register"
+                            : feature.href === "joined"
+                              ? session
+                                ? "/joined-events"
+                                : "/register"
+                              : feature.href
+                        }
+                        className="mt-4 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-ink transition-colors hover:text-clay"
+                      >
+                        {feature.href === "create"
+                          ? session
+                            ? "Create an event"
+                            : "Open a record"
+                          : feature.href === "joined"
+                            ? session
+                              ? "Your joined events"
+                              : "Start your record"
+                            : "Browse the register"}
+                        <ArrowRight className="size-3.5" aria-hidden />
+                      </Link>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </Container>
       </section>
@@ -275,7 +309,6 @@ export default async function HomePage() {
       <section id="upcoming" className="scroll-mt-24 border-t border-bark">
         <Container className="py-14 md:py-20">
           <SectionHeader
-            index="03"
             label="The register"
             title="What the city is doing next."
             description="The six nearest dates, posted by members. Past dates drop off this list and stay on the record."
@@ -354,16 +387,23 @@ export default async function HomePage() {
       <section id="gallery" className="scroll-mt-24 border-t border-bark">
         <Container className="py-14 md:py-20">
           <SectionHeader
-            index="04"
             label="From the field"
             title="What the work looks like."
             description="Photographs from collections, cleanups, and plantation mornings across the city."
           />
 
-          <div className="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-9 grid gap-5 lg:grid-cols-12">
             {fieldNotes.map((note) => (
-              <figure key={note.index} className="group border border-bark bg-card">
-                <div className="relative aspect-[4/3] overflow-hidden border-b border-bark bg-sand">
+              <figure
+                key={note.caption}
+                className={cn("group border border-bark bg-card", note.span)}
+              >
+                <div
+                  className={cn(
+                    "relative overflow-hidden border-b border-bark bg-sand",
+                    note.ratio,
+                  )}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={note.src}
@@ -371,13 +411,10 @@ export default async function HomePage() {
                     loading="lazy"
                     className="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transform-none"
                   />
-                  <span className="absolute left-3 top-3 bg-paper px-2 py-1 font-mono text-[9px] tracking-[0.14em] text-ink">
-                    {note.index}
-                  </span>
                 </div>
-                <figcaption className="px-4 py-3.5">
+                <figcaption className="flex items-end justify-between gap-4 px-4 py-3.5">
                   <p className="text-[13px] leading-5 text-ink">{note.caption}</p>
-                  <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-muted">
+                  <p className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-muted">
                     {note.place}
                   </p>
                 </figcaption>
@@ -398,12 +435,9 @@ export default async function HomePage() {
           <div className="bg-canopy px-6 py-10 text-on-brand md:px-10 md:py-12 lg:px-14 lg:py-14">
             <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
               <div className="lg:col-span-7">
-                <div className="flex items-baseline gap-3">
-                  <span className="font-mono text-meta text-marigold">05</span>
-                  <span className="font-mono text-eyebrow uppercase text-on-brand/60">
-                    The dispatch
-                  </span>
-                </div>
+                <p className="font-mono text-eyebrow uppercase text-marigold">
+                  The dispatch
+                </p>
                 <h2 className="mt-5 max-w-[18ch] text-balance font-serif text-h2 text-on-brand">
                   A monthly letter from the register.
                 </h2>
@@ -412,7 +446,7 @@ export default async function HomePage() {
                   coming next. Written after the work, not before it.
                 </p>
                 <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.16em] text-on-brand/40">
-                  Communova · Record no. 0001
+                  Communova · Dhaka
                 </p>
               </div>
 

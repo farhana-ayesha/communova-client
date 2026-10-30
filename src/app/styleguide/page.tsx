@@ -539,7 +539,6 @@ export default function StyleguidePage() {
             intro="Section openers and event cards are shared components, so the homepage strip, the listing grid, and the create-event preview cannot drift apart."
           >
             <SectionHeader
-              index="02"
               label="Happening soon"
               title="Six events, closest first"
               description="Pulled live from the API, filtered to future dates, sorted by event date."

@@ -138,12 +138,9 @@ export default async function EventDetailPage({ params }: PageProps) {
 
         <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">
           <article className="lg:col-span-7">
-            <div className="flex items-baseline gap-3">
-              <span className="font-mono text-meta text-clay">01</span>
-              <span className="font-mono text-eyebrow uppercase text-ink-muted">
-                The work
-              </span>
-            </div>
+            <span className="font-mono text-eyebrow uppercase text-clay">
+              The work
+            </span>
 
             <p className="mt-4 whitespace-pre-line text-body leading-relaxed text-ink-muted">
               {event.description}
@@ -264,7 +261,6 @@ export default async function EventDetailPage({ params }: PageProps) {
         {related.length > 0 ? (
           <section className="mt-14 md:mt-20">
             <SectionHeader
-              index="02"
               label="Keep looking"
               title="Three more mornings."
               action={

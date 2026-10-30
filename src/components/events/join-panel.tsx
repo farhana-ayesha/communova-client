@@ -148,7 +148,7 @@ function JoinPanel({
               : "Join this event"}
         </span>
         <span className="font-mono text-[10px] tracking-[0.1em] opacity-60">
-          {String(count).padStart(2, "0")}
+          {count}
         </span>
       </Button>
 
