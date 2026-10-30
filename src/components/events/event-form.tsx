@@ -107,7 +107,7 @@ function EventForm({
         },
       );
 
-      router.push(`/events/${event.id}`);
+      router.push(mode === "create" ? "/events" : `/events/${event.id}`);
       router.refresh();
     } catch (error) {
       if (error instanceof SignInRequiredError) {
