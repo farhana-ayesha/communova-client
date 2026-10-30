@@ -41,3 +41,9 @@ export interface EventDto {
   createdAt: string;
   updatedAt: string;
 }
+
+/** Public detail response; `viewerHasJoined` is false for guests. */
+export interface EventView {
+  event: EventDto;
+  viewerHasJoined: boolean;
+}

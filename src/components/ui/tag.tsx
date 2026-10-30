@@ -16,6 +16,12 @@ const tagVariants = cva(
         joined: "[&>span]:bg-marigold",
         full: "[&>span]:bg-clay",
         neutral: "[&>span]:bg-ink",
+        cleanup: "[&>span]:bg-fern",
+        plantation: "[&>span]:bg-marigold",
+        donation: "[&>span]:bg-clay",
+        education: "[&>span]:bg-ink",
+        health: "[&>span]:bg-ember",
+        other: "[&>span]:bg-ink-muted",
       },
     },
     defaultVariants: {
