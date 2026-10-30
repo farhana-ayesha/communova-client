@@ -26,8 +26,8 @@ export default function CreateEventPage() {  return (
         </div>
         <h2 className="mt-4 font-serif text-h1 text-ink">Create an event</h2>
         <p className="mt-3 max-w-[52ch] text-body text-ink-muted">
-          One service event, posted under your name. The form opens with the events
-          build; these are the six things it will ask for.
+          One service event, posted under your name. These are the six things the
+          register keeps for every event.
         </p>
       </div>
 

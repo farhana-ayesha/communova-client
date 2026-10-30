@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { ArrowRight, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
 import { Monogram, Wordmark } from "@/components/brand/wordmark";
 import { InstagramMark, XMark } from "@/components/brand/x-mark";
@@ -107,7 +107,7 @@ async function SiteFooter() {
                   className="inline-flex items-center gap-1 text-small text-on-brand/75 transition-colors hover:text-on-brand"
                 >
                   Start here
-                  <ArrowUpRight className="size-3.5" aria-hidden />
+                  <ArrowRight className="size-3.5" aria-hidden />
                 </Link>
               </li>
             </ul>
