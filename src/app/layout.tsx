@@ -6,6 +6,7 @@ import {
 } from "next/font/google";
 import type { ReactNode } from "react";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Toaster } from "@/components/providers/toaster";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html
       lang="en"
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={`${instrumentSans.variable} ${instrumentSerif.variable} ${plexMono.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground antialiased">
@@ -61,6 +63,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

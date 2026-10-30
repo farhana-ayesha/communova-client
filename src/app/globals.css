@@ -23,6 +23,8 @@
   --clay: #a54b25;
   --ember: #b3542b;
   --marigold: #d99a4e;
+  /* Fixed light ink for text on any dark brand surface, in both themes */
+  --on-brand: #f7f2e7;
 
   /* shadcn/ui contract */
   --background: var(--paper);
@@ -119,6 +121,7 @@
   --color-clay: var(--clay);
   --color-ember: var(--ember);
   --color-marigold: var(--marigold);
+  --color-on-brand: var(--on-brand);
 
   /* Typefaces */
   --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
