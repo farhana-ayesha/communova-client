@@ -77,3 +77,42 @@ export function daysUntil(iso: string): number {
   if (Number.isNaN(date.getTime())) return 0;
   return Math.ceil((date.getTime() - Date.now()) / (24 * 60 * 60 * 1000));
 }
+
+/**
+ * `datetime-local` speaks the browser's local clock with no zone suffix. This
+ * converts a stored instant into the value the input expects, and back again on
+ * submit via `new Date(value).toISOString()`.
+ */
+export function toDateTimeLocal(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+
+  const pad = (value: number) => String(value).padStart(2, "0");
+
+  return [
+    date.getFullYear(),
+    "-",
+    pad(date.getMonth() + 1),
+    "-",
+    pad(date.getDate()),
+    "T",
+    pad(date.getHours()),
+    ":",
+    pad(date.getMinutes()),
+  ].join("");
+}
+
+/** Splits a mixed list into future and past entries without re-sorting it. */
+export function splitByDate<T extends { eventDate: string }>(
+  items: T[],
+): { upcoming: T[]; past: T[] } {
+  const upcoming: T[] = [];
+  const past: T[] = [];
+
+  for (const item of items) {
+    if (isPastEvent(item.eventDate)) past.push(item);
+    else upcoming.push(item);
+  }
+
+  return { upcoming, past };
+}

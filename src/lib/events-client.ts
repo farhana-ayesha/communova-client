@@ -1,4 +1,4 @@
-import type { EventDto, EventView } from "@/types/event";
+import type { EventDto, EventType, EventView } from "@/types/event";
 
 /**
  * Browser-side calls to the Express API. Every mutating request exchanges the
@@ -134,4 +134,38 @@ export async function listJoinedEvents(): Promise<EventDto[]> {
 
 export async function listMyEvents(): Promise<EventDto[]> {
   return apiRequest<EventDto[]>("/api/events/mine");
+}
+
+/** The six fields the register keeps for every event. */
+export type EventPayload = {
+  title: string;
+  description: string;
+  type: EventType;
+  thumbnailUrl: string;
+  location: string;
+  /** ISO 8601 timestamp. */
+  eventDate: string;
+};
+
+export function createEventRequest(input: EventPayload): Promise<EventDto> {
+  return apiRequest<EventDto>("/api/events", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}
+
+export function updateEventRequest(
+  id: string,
+  input: EventPayload,
+): Promise<EventDto> {
+  return apiRequest<EventDto>(`/api/events/${encodeURIComponent(id)}`, {
+    method: "PATCH",
+    body: JSON.stringify(input),
+  });
+}
+
+export async function deleteEventRequest(id: string): Promise<void> {
+  await apiRequest<void>(`/api/events/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+  });
 }
