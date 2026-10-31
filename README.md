@@ -26,32 +26,24 @@ Live site: **https://communova.vercel.app** _(placeholder — replace after depl
 
 ## Stack
 
-| Layer | Choice |
-| --- | --- |
+| Layer  | Choice                                                              |
+| ------ | ------------------------------------------------------------------- |
 | Client | Next.js (App Router), TypeScript, Tailwind v4, shadcn/ui primitives |
-| Auth | Better Auth, MongoDB adapter, JWT + JWKS |
-| Server | Express 5, TypeScript, MongoDB |
-| Fonts | Instrument Serif, Instrument Sans, IBM Plex Mono |
+| Auth   | Better Auth, MongoDB adapter, JWT + JWKS                            |
+| Server | Express 5, TypeScript, MongoDB                                      |
+| Fonts  | Instrument Serif, Instrument Sans, IBM Plex Mono                    |
 
 ## Local development
 
 ```bash
-# client
-cd client
 cp .env.example .env.local
-npm install
-npm run dev
-
-# server
-cd server
-cp .env.example .env
 npm install
 npm run dev
 ```
 
-The client runs on `http://localhost:3000`; the API on `http://localhost:4000`.
-Point `MONGODB_URI` at an Atlas cluster (or a local mongod) in both `.env` files
-and add Google OAuth keys to enable social sign-in.
+The client runs on `http://localhost:3000`. The API lives in a separate repo: [communova-server](https://github.com/farhana-ayesha/communova-server) (runs on `http://localhost:4000`).
+
+Point `MONGODB_URI` at an Atlas cluster (or a local mongod) in `.env.local` and add Google OAuth keys to enable social sign-in.
 
 ### Without MongoDB
 
@@ -61,26 +53,25 @@ every other feature still targets MongoDB.
 
 ## Repository layout
 
-```
-client/   Next.js app, Better Auth, design system
-server/   Express API, JWT verification, events
-```
+## Repository layout
+
+This repo is the Next.js client. The Express API is in [communova-server](https://github.com/farhana-ayesha/communova-server).
 
 See `client/src/app/styleguide` (development only) for the design system
 reference.
 
 ## Scripts
 
-| Client | Purpose |
-| --- | --- |
-| `npm run dev` | Next dev server |
-| `npm run build` | Production build |
-| `npm run lint` | ESLint |
+| Client              | Purpose             |
+| ------------------- | ------------------- |
+| `npm run dev`       | Next dev server     |
+| `npm run build`     | Production build    |
+| `npm run lint`      | ESLint              |
 | `npm run typecheck` | TypeScript, no emit |
 
-| Server | Purpose |
-| --- | --- |
-| `npm run dev` | Watch mode via `tsx` |
-| `npm run build` | Compile to `dist/` |
-| `npm start` | Run the compiled API |
-| `npm run typecheck` | TypeScript, no emit |
+| Server              | Purpose              |
+| ------------------- | -------------------- |
+| `npm run dev`       | Watch mode via `tsx` |
+| `npm run build`     | Compile to `dist/`   |
+| `npm start`         | Run the compiled API |
+| `npm run typecheck` | TypeScript, no emit  |
