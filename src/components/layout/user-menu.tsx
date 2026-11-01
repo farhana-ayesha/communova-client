@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
+import { clearViewerToken } from "@/lib/events-client";
 
 type Member = {
   name: string;
@@ -51,6 +52,7 @@ function UserMenu({ user }: { user: Member }) {
       return;
     }
 
+    clearViewerToken();
     toast.success("Signed out.", { description: "Your record stays where you left it." });
     router.push("/");
     router.refresh();

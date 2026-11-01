@@ -72,7 +72,7 @@ export default async function EditEventPage({ params }: PageProps) {
             </h2>
             <p className="mt-3 max-w-[54ch] text-body text-ink-muted">
               The change is public as soon as you save it. Past dates stay on the
-              record but cannot be chosen again.
+              record; keep the original time or move the event into the future.
             </p>
           </div>
 
@@ -86,6 +86,7 @@ export default async function EditEventPage({ params }: PageProps) {
         <EventForm
           mode="edit"
           eventId={event.id}
+          originalEventDate={event.eventDate}
           defaultValues={{
             title: event.title,
             description: event.description,

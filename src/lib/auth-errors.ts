@@ -30,12 +30,24 @@ export function authErrorMessage(error: { code?: string; message?: string } | nu
 
 /**
  * Only same-site paths are accepted for post-auth navigation, so `?next=` can
- * never be used as an open redirect.
+ * never be used as an open redirect. Authentication pages are also rejected:
+ * returning to them after signing in would bounce between two redirects.
  */
 export function safeNextPath(value: string | null | undefined, fallback = "/profile") {
   if (!value) return fallback;
   if (!value.startsWith("/") || value.startsWith("//") || value.startsWith("/\\")) {
     return fallback;
   }
+
+  const pathname = value.split(/[?#]/, 1)[0];
+  if (
+    pathname === "/login" ||
+    pathname.startsWith("/login/") ||
+    pathname === "/register" ||
+    pathname.startsWith("/register/")
+  ) {
+    return fallback;
+  }
+
   return value;
 }

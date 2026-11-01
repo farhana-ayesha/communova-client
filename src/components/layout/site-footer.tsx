@@ -1,9 +1,11 @@
-import { ArrowRight, Mail, MapPin } from "lucide-react";
+﻿import { ArrowRight, Bug, Code, MapPin } from "lucide-react";
 import Link from "next/link";
 import { Monogram, Wordmark } from "@/components/brand/wordmark";
-import { InstagramMark, XMark } from "@/components/brand/x-mark";
 import { Container } from "@/components/layout/container";
 import { getSession } from "@/lib/session";
+
+const REPOSITORY_URL = "https://github.com/farhana-ayesha/communova-client";
+const ISSUES_URL = `${REPOSITORY_URL}/issues/new`;
 
 const explore = [
   { href: "/events", label: "Upcoming events" },
@@ -38,12 +40,12 @@ async function SiteFooter() {
 
             <p className="mt-5 max-w-[34ch] text-body leading-relaxed text-on-brand/75">
               A civic almanac for Dhaka: the cleanups, plantation drives, and
-              collections that neighbours organise — and a public record of who
+              collections that neighbours organise â€” and a public record of who
               showed up.
             </p>
 
             <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.16em] text-on-brand/50">
-              A public record · Dhaka, Bangladesh
+              A public record Â· Dhaka, Bangladesh
             </p>
           </div>
 
@@ -115,16 +117,29 @@ async function SiteFooter() {
 
           <div className="lg:col-span-3">
             <h2 className="font-mono text-[10px] uppercase tracking-[0.18em] text-marigold">
-              Contact
+              Project
             </h2>
             <ul className="mt-4 space-y-3">
               <li>
                 <a
-                  href="mailto:hello@communova.org"
+                  href={REPOSITORY_URL}
+                  target="_blank"
+                  rel="noreferrer noopener"
                   className="inline-flex items-start gap-2.5 text-small text-on-brand/75 transition-colors hover:text-on-brand"
                 >
-                  <Mail className="mt-0.5 size-4 shrink-0" aria-hidden />
-                  hello@communova.org
+                  <Code className="mt-0.5 size-4 shrink-0" aria-hidden />
+                  Source code
+                </a>
+              </li>
+              <li>
+                <a
+                  href={ISSUES_URL}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="inline-flex items-start gap-2.5 text-small text-on-brand/75 transition-colors hover:text-on-brand"
+                >
+                  <Bug className="mt-0.5 size-4 shrink-0" aria-hidden />
+                  Report an issue
                 </a>
               </li>
               <li className="inline-flex items-start gap-2.5 text-small text-on-brand/75">
@@ -135,29 +150,22 @@ async function SiteFooter() {
 
             <div className="mt-6 flex items-center gap-2">
               <a
-                href="https://x.com/communova"
+                href={REPOSITORY_URL}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="Communova on X"
+                aria-label="Communova source code on GitHub"
                 className="grid size-9 place-items-center border border-on-brand/20 text-on-brand/75 transition-colors hover:border-on-brand/50 hover:text-on-brand"
               >
-                <XMark className="size-3.5" />
+                <Code className="size-4" aria-hidden />
               </a>
               <a
-                href="https://instagram.com/communova"
+                href={ISSUES_URL}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="Communova on Instagram"
+                aria-label="Report a Communova issue"
                 className="grid size-9 place-items-center border border-on-brand/20 text-on-brand/75 transition-colors hover:border-on-brand/50 hover:text-on-brand"
               >
-                <InstagramMark className="size-4" />
-              </a>
-              <a
-                href="mailto:hello@communova.org"
-                aria-label="Email Communova"
-                className="grid size-9 place-items-center border border-on-brand/20 text-on-brand/75 transition-colors hover:border-on-brand/50 hover:text-on-brand"
-              >
-                <Mail className="size-4" aria-hidden />
+                <Bug className="size-4" aria-hidden />
               </a>
             </div>
           </div>
@@ -165,7 +173,7 @@ async function SiteFooter() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-on-brand/15 pt-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-on-brand/50">
-            © 2026 Communova · every event is a record
+            Â© 2026 Communova Â· every event is a record
           </p>
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-on-brand/50">
             Designed and built in Dhaka

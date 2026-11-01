@@ -33,13 +33,15 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Enter your password."),
 });
 
+const displayName = z
+  .string()
+  .trim()
+  .min(2, "Use at least 2 characters.")
+  .max(60, "Use 60 characters or fewer.");
+
 export const registerSchema = z
   .object({
-    name: z
-      .string()
-      .trim()
-      .min(2, "Use at least 2 characters.")
-      .max(60, "Use 60 characters or fewer."),
+    name: displayName,
     email,
     photoURL,
     password,
@@ -50,5 +52,12 @@ export const registerSchema = z
     message: "Passwords do not match.",
   });
 
+/** Editing an existing record never changes the email or password. */
+export const profileSchema = z.object({
+  name: displayName,
+  photoURL,
+});
+
 export type LoginValues = z.infer<typeof loginSchema>;
 export type RegisterValues = z.infer<typeof registerSchema>;
+export type ProfileValues = z.infer<typeof profileSchema>;

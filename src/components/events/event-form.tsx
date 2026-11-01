@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -18,13 +18,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { isPastEvent } from "@/lib/dates";
 import {
   ApiError,
   SignInRequiredError,
   createEventRequest,
   updateEventRequest,
 } from "@/lib/events-client";
-import { eventFormSchema, type EventFormValues } from "@/lib/validations/event";
+import {
+  createEventFormSchema,
+  type EventFormValues,
+} from "@/lib/validations/event";
 import { EVENT_TYPE_LABELS, EVENT_TYPES } from "@/types/event";
 
 const FIELD_KEYS = new Set<keyof EventFormValues>([
@@ -48,15 +52,26 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 function EventForm({
   mode,
   eventId,
+  originalEventDate,
   defaultValues,
 }: {
   mode: "create" | "edit";
   eventId?: string;
+  /** Stored ISO date of the event being edited; absent when creating. */
+  originalEventDate?: string;
   defaultValues: EventFormValues;
 }) {
   const router = useRouter();
   const [formError, setFormError] = useState<string | null>(null);
   const [previewBroken, setPreviewBroken] = useState(false);
+
+  const schema = useMemo(
+    () => createEventFormSchema(mode === "edit" ? originalEventDate : undefined),
+    [mode, originalEventDate],
+  );
+  const editingPastEvent = Boolean(
+    mode === "edit" && originalEventDate && isPastEvent(originalEventDate),
+  );
 
   const {
     register,
@@ -65,7 +80,7 @@ function EventForm({
     setError,
     formState: { errors, isSubmitting },
   } = useForm<EventFormValues>({
-    resolver: zodResolver(eventFormSchema),
+    resolver: zodResolver(schema),
     defaultValues,
   });
 
@@ -75,7 +90,9 @@ function EventForm({
 
   function onInvalid() {
     toast.error("Check the highlighted fields.", {
-      description: "Every field is required, and the date must still be ahead.",
+      description: editingPastEvent
+        ? "Every field is required; keep the original time or move the event into the future."
+        : "Every field is required, and the date must still be ahead.",
     });
   }
 
@@ -230,8 +247,8 @@ function EventForm({
               id="event-thumbnail-hint"
               className="text-[12px] leading-5 text-ink-muted"
             >
-              A landscape photograph of the work: tools, hands, the place, or a
-              male volunteer. Do not post photographs of women or girls.
+              Use a landscape photograph you took or have permission to publish.
+              Do not post images of people who have not agreed to appear.
             </p>
           </div>
 
@@ -313,8 +330,9 @@ function EventForm({
                 id="event-date-hint"
                 className="text-[12px] leading-5 text-ink-muted"
               >
-                Past dates are refused. Times are shown in Dhaka on the public
-                pages.
+                {editingPastEvent
+                  ? "This event has already happened. Keep its original time, or move it into the future."
+                  : "New events need a future date. Times are shown in Dhaka on the public pages."}
               </p>
             </div>
 

@@ -1,8 +1,10 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 import { Container } from "@/components/layout/container";
 import { PrivateNav } from "@/components/layout/private-nav";
 import { Avatar } from "@/components/user/avatar";
+import { safeNextPath } from "@/lib/auth-errors";
 import { getSession } from "@/lib/session";
 
 /**
@@ -14,7 +16,8 @@ export default async function PrivateLayout({ children }: { children: ReactNode 
   const session = await getSession();
 
   if (!session) {
-    redirect("/login");
+    const requestedPath = (await headers()).get("x-communova-path");
+    redirect(`/login?next=${encodeURIComponent(safeNextPath(requestedPath))}`);
   }
 
   const { user } = session;

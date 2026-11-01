@@ -18,9 +18,16 @@ export function proxy(request: NextRequest) {
 
   if (!isPrivate) return NextResponse.next();
 
+  // A cookie can outlive its session. Pass the requested path upstream so the
+  // private layout can return the member here after a fresh sign-in.
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-communova-path", `${pathname}${search}`);
+
   const hasSessionCookie = Boolean(getSessionCookie(request));
 
-  if (hasSessionCookie) return NextResponse.next();
+  if (hasSessionCookie) {
+    return NextResponse.next({ request: { headers: requestHeaders } });
+  }
 
   const loginUrl = new URL("/login", request.url);
   loginUrl.searchParams.set("next", `${pathname}${search}`);

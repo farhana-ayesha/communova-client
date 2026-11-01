@@ -6,6 +6,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
+import { clearViewerToken } from "@/lib/events-client";
 
 function SignOutButton() {
   const [pending, setPending] = useState(false);
@@ -23,6 +24,7 @@ function SignOutButton() {
       return;
     }
 
+    clearViewerToken();
     toast.success("Signed out.", { description: "Your record stays where you left it." });
     router.push("/");
     router.refresh();

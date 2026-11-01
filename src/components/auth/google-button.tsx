@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { authErrorMessage, safeNextPath } from "@/lib/auth-errors";
+import { clearViewerToken } from "@/lib/events-client";
 
 function GoogleMark() {
   return (
@@ -53,6 +54,7 @@ function GoogleButton({
     }
 
     setPending(true);
+    clearViewerToken();
     const { error } = await authClient.signIn.social({
       provider: "google",
       callbackURL: safeNextPath(nextPath),

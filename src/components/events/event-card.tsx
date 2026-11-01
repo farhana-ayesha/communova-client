@@ -1,6 +1,7 @@
 import { ArrowUpRight, MapPin, Users } from "lucide-react";
 import Link from "next/link";
 import { Tag } from "@/components/ui/tag";
+import { Avatar } from "@/components/user/avatar";
 import { eventDateParts, isPastEvent } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 import { EVENT_TYPE_LABELS, type EventDto } from "@/types/event";
@@ -86,13 +87,19 @@ function EventCard({
         </p>
 
         <div className="mt-auto flex items-end justify-between gap-3 border-t border-bark pt-4">
-          <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-ink-muted">
-              Organised by
-            </p>
-            <p className="mt-1.5 truncate text-[12px] leading-4 text-ink">
-              {event.creator.name}
-            </p>
+          <div className="flex min-w-0 items-center gap-2.5">
+            <Avatar
+              user={{ name: event.creator.name, image: event.creator.image }}
+              size="sm"
+            />
+            <div className="min-w-0">
+              <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-ink-muted">
+                Organised by
+              </p>
+              <p className="mt-1.5 truncate text-[12px] leading-4 text-ink">
+                {event.creator.name}
+              </p>
+            </div>
           </div>
 
           <Link

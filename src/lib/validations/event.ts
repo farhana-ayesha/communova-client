@@ -5,8 +5,12 @@ import { EVENT_TYPES } from "@/types/event";
  * Client-side event form rules. The API validates the same fields again in
  * `server/src/modules/events/event.schema.ts`; this copy exists to give
  * immediate, field-level feedback.
+ *
+ * Creating an event requires a future date. Editing keeps the same rule, with
+ * one exception: an event that has already happened may be saved without
+ * changing its original minute, so older records stay editable.
  */
-export const eventFormSchema = z.object({
+const eventFields = z.object({
   title: z
     .string()
     .trim()
@@ -38,11 +42,35 @@ export const eventFormSchema = z.object({
     .refine(
       (value) => !Number.isNaN(Date.parse(value)),
       "Enter a valid date and time.",
-    )
-    .refine(
-      (value) => new Date(value).getTime() > Date.now(),
-      "Choose a date in the future.",
     ),
 });
+
+export function createEventFormSchema(originalEventDate?: string) {
+  const original = originalEventDate ? Date.parse(originalEventDate) : Number.NaN;
+
+  return eventFields.superRefine((values, context) => {
+    const selected = Date.parse(values.eventDate);
+    if (Number.isNaN(selected)) return;
+
+    if (selected > Date.now()) return;
+
+    // The API compares stored dates to the minute, so mirror that precision.
+    const sameMinute =
+      !Number.isNaN(original) &&
+      Math.floor(selected / 60_000) === Math.floor(original / 60_000);
+
+    if (sameMinute) return;
+
+    context.addIssue({
+      code: "custom",
+      path: ["eventDate"],
+      message: Number.isNaN(original)
+        ? "Choose a date in the future."
+        : "Choose a future date, or keep the original time.",
+    });
+  });
+}
+
+export const eventFormSchema = createEventFormSchema();
 
 export type EventFormValues = z.infer<typeof eventFormSchema>;

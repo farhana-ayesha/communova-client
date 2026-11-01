@@ -150,11 +150,11 @@ export default async function HomePage() {
                 </div>
                 <figcaption className="flex items-start justify-between gap-5 px-4 py-3.5">
                   <p className="max-w-[36ch] text-[12px] leading-5 text-ink-muted">
-                    Hands, soil, and a sapling ready for the next plantation
-                    morning at Dhanmondi Lake.
+                    Hands, soil, and a sapling — an illustrative photograph of
+                    the work the register records.
                   </p>
                   <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-ink-muted">
-                    Dhaka · 2026
+                    Illustration · Unsplash
                   </span>
                 </figcaption>
               </figure>
@@ -387,9 +387,9 @@ export default async function HomePage() {
       <section id="gallery" className="scroll-mt-24 border-t border-bark">
         <Container className="py-14 md:py-20">
           <SectionHeader
-            label="From the field"
+            label="Illustrated"
             title="What the work looks like."
-            description="Photographs from collections, cleanups, and plantation mornings across the city."
+            description="Photographs that illustrate the kind of work the register records."
           />
 
           <div className="mt-9 grid gap-5 lg:grid-cols-12">
@@ -423,8 +423,9 @@ export default async function HomePage() {
           </div>
 
           <p className="mt-6 border-l-2 border-marigold pl-4 text-[12px] leading-5 text-ink-muted">
-            Field photographs from the 2026 register. Every event carries the
-            person who posted it, so the record has a name behind it.
+            Illustrative photography via Unsplash. Event pages carry the
+            organiser&apos;s own photograph, and every event names the person who
+            posted it.
           </p>
         </Container>
       </section>

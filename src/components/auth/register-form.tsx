@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import { authErrorMessage, safeNextPath } from "@/lib/auth-errors";
+import { clearViewerToken } from "@/lib/events-client";
 import { registerSchema, type RegisterValues } from "@/lib/validations/auth";
 import { cn } from "@/lib/utils";
 
@@ -83,6 +84,7 @@ function RegisterForm({
       return;
     }
 
+    clearViewerToken();
     toast.success("Your record is open.", {
       description: "Welcome to Communova. Start with an event near you.",
     });

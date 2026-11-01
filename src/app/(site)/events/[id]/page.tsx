@@ -187,7 +187,10 @@ export default async function EventDetailPage({ params }: PageProps) {
             </dl>
 
             <div className="mt-8 flex items-center gap-3 border-t border-bark pt-5">
-              <Avatar user={{ name: event.creator.name, image: null }} size="md" />
+              <Avatar
+                user={{ name: event.creator.name, image: event.creator.image }}
+                size="md"
+              />
               <div className="min-w-0">
                 <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-ink-muted">
                   Organised by

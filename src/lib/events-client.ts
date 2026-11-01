@@ -169,3 +169,22 @@ export async function deleteEventRequest(id: string): Promise<void> {
     method: "DELETE",
   });
 }
+
+export type NewsletterSubscription = {
+  email: string;
+  alreadySubscribed: boolean;
+};
+
+/** Public endpoint: no session or bearer token is needed. */
+export function subscribeToNewsletter(
+  email: string,
+): Promise<NewsletterSubscription> {
+  return apiRequest<NewsletterSubscription>(
+    "/api/newsletter",
+    {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    },
+    false,
+  );
+}

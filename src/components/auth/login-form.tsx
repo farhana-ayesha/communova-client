@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import { authErrorMessage, safeNextPath } from "@/lib/auth-errors";
+import { clearViewerToken } from "@/lib/events-client";
 import { loginSchema, type LoginValues } from "@/lib/validations/auth";
 import { cn } from "@/lib/utils";
 
@@ -61,7 +62,8 @@ function LoginForm({
     });
   }
 
-  async function onSubmit(values: LoginValues) {    setFormError(null);
+  async function onSubmit(values: LoginValues) {
+    setFormError(null);
 
     const { error } = await authClient.signIn.email({
       email: values.email,
@@ -75,6 +77,7 @@ function LoginForm({
       return;
     }
 
+    clearViewerToken();
     toast.success("Signed in.", { description: "Your record is open." });
     router.replace(safeNextPath(nextPath));
     router.refresh();
