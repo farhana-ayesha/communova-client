@@ -40,12 +40,12 @@ async function SiteFooter() {
 
             <p className="mt-5 max-w-[34ch] text-body leading-relaxed text-on-brand/75">
               A civic almanac for Dhaka: the cleanups, plantation drives, and
-              collections that neighbours organise â€” and a public record of who
+              collections that neighbours organise &mdash; and a public record of who
               showed up.
             </p>
 
             <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.16em] text-on-brand/50">
-              A public record Â· Dhaka, Bangladesh
+              A public record &middot; Dhaka, Bangladesh
             </p>
           </div>
 
@@ -173,7 +173,7 @@ async function SiteFooter() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-on-brand/15 pt-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-on-brand/50">
-            Â© 2026 Communova Â· every event is a record
+            &copy; 2026 Communova &middot; every event is a record
           </p>
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-on-brand/50">
             Designed and built in Dhaka
