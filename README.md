@@ -1,10 +1,11 @@
-# Communova — client
+# Communova
 
 A civic almanac for Dhaka: a community events platform where residents create
 service events, join their neighbours, and keep a public record of the work.
 
-This repository is the Next.js client. The Express API lives in
-[communova-server](https://github.com/farhana-ayesha/communova-server).
+\*\*Live site:https://communova-client.vercel.app/.vercel.app
+
+**Repositories:** [communova-client](https://github.com/farhana-ayesha/communova-client) (this repo, Next.js) · [communova-server](https://github.com/farhana-ayesha/communova-server) (Express API)
 
 ## Features
 
@@ -46,17 +47,20 @@ This repository is the Next.js client. The Express API lives in
 
 ## Local development
 
-Start the API first, then the client.
+The client and the API live in two separate repositories. Clone both, start the
+API first, then the client.
 
 ```bash
 # terminal 1 — server
-cd server
+git clone https://github.com/farhana-ayesha/communova-server.git
+cd communova-server
 cp .env.example .env
 npm install
 npm run dev
 
 # terminal 2 — client
-cd client
+git clone https://github.com/farhana-ayesha/communova-client.git
+cd communova-client
 cp .env.example .env.local
 npm install
 npm run dev
@@ -70,14 +74,16 @@ projects, and add Google OAuth keys to enable social sign-in.
 
 ### Without MongoDB
 
-Set `AUTH_DEV_MEMORY=1` in `client/.env.local` and `EVENTS_DEV_MEMORY=1` in
-`server/.env` to run against Better Auth's in-memory adapter and the API's
-process-local register. Accounts and events reset when the processes restart.
-Both switches are development-only and are refused at production runtime.
+Set `AUTH_DEV_MEMORY=1` in the client's `.env.local` and `EVENTS_DEV_MEMORY=1`
+in the server's `.env` to run against Better Auth's in-memory adapter and the
+API's process-local register. Accounts and events reset when the processes
+restart. Both switches are development-only and are refused at production
+runtime.
 
 ### Google OAuth
 
-Create an OAuth client in Google Cloud Console and add these redirect URIs:
+Create an OAuth client in Google Cloud Console and add these as both
+authorised JavaScript origins (origin only) and redirect URIs (with path):
 
 - `http://localhost:3000/api/auth/callback/google`
 - `https://<your-client-domain>/api/auth/callback/google`
@@ -88,16 +94,16 @@ the Google button stays disabled and explains why.
 
 ## Environment
 
-| Variable                   | Required | Notes                                                                 |
-| -------------------------- | -------- | --------------------------------------------------------------------- |
-| `BETTER_AUTH_SECRET`       | yes      | 32+ random bytes; generate with `openssl rand -hex 32`                 |
-| `BETTER_AUTH_URL`          | yes      | Public client origin, e.g. `https://communova.vercel.app`              |
-| `MONGODB_URI`              | yes      | Atlas connection string or local `mongodb://` URI                     |
-| `MONGODB_DB`               | no       | Defaults to `communova`                                               |
-| `NEXT_PUBLIC_API_URL`      | yes      | Public API origin, e.g. `https://communova-api.onrender.com`          |
-| `GOOGLE_CLIENT_ID`         | no       | Enables Google sign-in when paired with the secret                    |
-| `GOOGLE_CLIENT_SECRET`     | no       | Enables Google sign-in when paired with the client ID                 |
-| `AUTH_DEV_MEMORY`          | no       | `1` uses the in-memory adapter in development; refused in production   |
+| Variable               | Required | Notes                                                                |
+| ---------------------- | -------- | -------------------------------------------------------------------- |
+| `BETTER_AUTH_SECRET`   | yes      | 32+ random bytes; generate with `openssl rand -hex 32`               |
+| `BETTER_AUTH_URL`      | yes      | Public client origin, e.g. `https://communova.vercel.app`            |
+| `MONGODB_URI`          | yes      | Atlas connection string or local `mongodb://` URI                    |
+| `MONGODB_DB`           | no       | Defaults to `communova`                                              |
+| `NEXT_PUBLIC_API_URL`  | yes      | Public API origin, e.g. `https://communova-api.onrender.com`         |
+| `GOOGLE_CLIENT_ID`     | no       | Enables Google sign-in when paired with the secret                   |
+| `GOOGLE_CLIENT_SECRET` | no       | Enables Google sign-in when paired with the client ID                |
+| `AUTH_DEV_MEMORY`      | no       | `1` uses the in-memory adapter in development; refused in production |
 
 Never commit `.env.local` or production secrets.
 
@@ -115,14 +121,16 @@ redirects.
 
 ## Deployment (Vercel)
 
-1. Import this repository into Vercel with the project root set to `client`.
+1. Import this repository into Vercel. The app sits at the repository root, so
+   keep the root directory as `./` and the preset as Next.js.
 2. Add the environment variables above. Leave `AUTH_DEV_MEMORY` unset.
-3. Set `BETTER_AUTH_URL` to the production client URL **before** the first
-   deploy, because it is embedded in the Better Auth JWT issuer.
+3. Set `BETTER_AUTH_URL` to the production client URL. If you only learn the URL
+   after the first deploy, add the variable and redeploy, because it is embedded
+   in the Better Auth JWT issuer.
 4. Set `NEXT_PUBLIC_API_URL` to the deployed API origin.
-5. Deploy the API first (or update the client variable afterwards) and add the
-   client origin to the API's `CLIENT_ORIGIN`.
-6. Add the production Google redirect URI if OAuth is enabled.
+5. Deploy the API (or update the client variable afterwards) and add the client
+   origin to the API's `CLIENT_ORIGIN`.
+6. Add the production Google origin and redirect URI if OAuth is enabled.
 
 `BETTER_AUTH_URL` and `NEXT_PUBLIC_API_URL` are read at build time for the
 client bundle; redeploy after changing them.
@@ -151,12 +159,12 @@ See `src/app/styleguide` (development only) for the design system reference.
 
 ## Scripts
 
-| Script              | Purpose                        |
-| ------------------- | ------------------------------ |
-| `npm run dev`       | Next dev server                |
-| `npm run build`     | Production build               |
-| `npm start`         | Serve the production build     |
-| `npm run lint`      | ESLint                         |
-| `npm run typecheck` | TypeScript, no emit            |
-| `npm test`          | Validation and redirect tests  |
-| `npm run dev:db`    | Local MongoDB helper           |
+| Script              | Purpose                       |
+| ------------------- | ----------------------------- |
+| `npm run dev`       | Next dev server               |
+| `npm run build`     | Production build              |
+| `npm start`         | Serve the production build    |
+| `npm run lint`      | ESLint                        |
+| `npm run typecheck` | TypeScript, no emit           |
+| `npm test`          | Validation and redirect tests |
+| `npm run dev:db`    | Local MongoDB helper          |
