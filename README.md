@@ -3,7 +3,7 @@
 A civic almanac for Dhaka: a community events platform where residents create
 service events, join their neighbours, and keep a public record of the work.
 
-\*\*Live site:https://communova-client.vercel.app/.vercel.app
+\*\*Live site:https://communova-client.vercel.app/
 
 **Repositories:** [communova-client](https://github.com/farhana-ayesha/communova-client) (this repo, Next.js) · [communova-server](https://github.com/farhana-ayesha/communova-server) (Express API)
 
